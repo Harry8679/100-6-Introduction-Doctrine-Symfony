@@ -1,20 +1,66 @@
 {% extends 'base.html.twig' %}
 
-{% block title %}Hello ArticleController!{% endblock %}
+{% block title %}Tous les articles{% endblock %}
 
 {% block body %}
-<style>
-    .example-wrapper { margin: 1em auto; max-width: 800px; width: 95%; font: 18px/1.5 sans-serif; }
-    .example-wrapper code { background: #F5F5F5; padding: 2px 6px; }
-</style>
 
-<div class="example-wrapper">
-    <h1>Hello {{ controller_name }}! ✅</h1>
+<div class="max-w-2xl mx-auto px-6 py-12">
 
-    This friendly message is coming from:
-    <ul>
-        <li>Your controller at <code>/Users/admin/Desktop/Programming/EBANG_MEZUI/100-Symfony-Projects/6-introduction-to-doctrine/src/Controller/ArticleController.php</code></li>
-        <li>Your template at <code>/Users/admin/Desktop/Programming/EBANG_MEZUI/100-Symfony-Projects/6-introduction-to-doctrine/templates/article/index.html.twig</code></li>
-    </ul>
+    <h1 class="text-3xl font-bold text-gray-900 mb-2">Tous les articles</h1>
+    <p class="text-gray-400 mb-8">{{ articles|length }} article(s) en base de données</p>
+
+    {% if articles is empty %}
+
+        <div class="text-center py-16">
+            <p class="text-gray-400 mb-4">Aucun article pour l'instant.</p>
+            <a href="{{ path('app_article_new') }}"
+               class="bg-gray-900 text-white text-sm px-5 py-2.5 rounded-xl hover:bg-gray-700">
+                Créer le premier article
+            </a>
+        </div>
+
+    {% else %}
+
+        <div class="flex flex-col gap-4">
+            {% for article in articles %}
+
+                <div class="bg-white border border-gray-200 rounded-xl p-6">
+
+                    <div class="flex items-start justify-between gap-4">
+                        <div>
+                            {# article.createdAt est un objet DateTime → filtre "date" pour le formater #}
+                            <p class="text-xs text-gray-400 mb-1">
+                                {{ article.createdAt|date('d/m/Y') }}
+                            </p>
+                            <h2 class="text-lg font-bold text-gray-900 mb-2">
+                                {{ article.titre }}
+                            </h2>
+                            <p class="text-sm text-gray-500">
+                                {# Filtre "slice" pour afficher les 100 premiers caractères #}
+                                {{ article.contenu|slice(0, 100) }}...
+                            </p>
+                        </div>
+                    </div>
+
+                    <div class="flex gap-3 mt-4">
+                        <a href="{{ path('app_article_show', { id: article.id }) }}"
+                           class="text-sm text-blue-600 hover:underline">
+                            Lire →
+                        </a>
+                        <a href="{{ path('app_article_delete', { id: article.id }) }}"
+                           class="text-sm text-red-400 hover:underline"
+                           onclick="return confirm('Supprimer cet article ?')">
+                            Supprimer
+                        </a>
+                    </div>
+
+                </div>
+
+            {% endfor %}
+        </div>
+
+    {% endif %}
+
 </div>
+
 {% endblock %}
