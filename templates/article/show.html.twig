@@ -1,0 +1,35 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}{{ article.titre }}{% endblock %}
+
+{% block body %}
+
+<div class="max-w-2xl mx-auto px-6 py-12">
+
+    <a href="{{ path('app_article_index') }}" class="text-sm text-gray-400 hover:text-gray-700 mb-6 inline-block">
+        ← Retour à la liste
+    </a>
+
+    <p class="text-sm text-gray-400 mt-6 mb-2">
+        Publié le {{ article.createdAt|date('d/m/Y à H:i') }}
+    </p>
+
+    <h1 class="text-3xl font-bold text-gray-900 mb-6">
+        {{ article.titre }}
+    </h1>
+
+    <p class="text-gray-600 leading-relaxed whitespace-pre-line">
+        {{ article.contenu }}
+    </p>
+
+    <div class="mt-10 pt-6 border-t border-gray-200">
+        <a href="{{ path('app_article_delete', { id: article.id }) }}"
+           class="text-sm text-red-400 hover:underline"
+           onclick="return confirm('Supprimer cet article ?')">
+            Supprimer cet article
+        </a>
+    </div>
+
+</div>
+
+{% endblock %}
