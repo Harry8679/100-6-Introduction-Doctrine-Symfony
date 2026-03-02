@@ -1,0 +1,50 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Nouvel article{% endblock %}
+
+{% block body %}
+
+<div class="max-w-2xl mx-auto px-6 py-12">
+
+    <a href="{{ path('app_article_index') }}" class="text-sm text-gray-400 hover:text-gray-700 mb-6 inline-block">
+        ← Retour à la liste
+    </a>
+
+    <h1 class="text-3xl font-bold text-gray-900 mb-8">Nouvel article</h1>
+
+    <form method="POST" action="{{ path('app_article_new') }}" class="flex flex-col gap-5">
+
+        <div>
+            <label class="block text-sm font-medium text-gray-700 mb-1">Titre</label>
+            <input
+                type="text"
+                name="titre"
+                required
+                class="w-full border border-gray-300 rounded-xl px-4 py-3 text-sm focus:outline-none focus:border-gray-500"
+                placeholder="Titre de l'article"
+            >
+        </div>
+
+        <div>
+            <label class="block text-sm font-medium text-gray-700 mb-1">Contenu</label>
+            <textarea
+                name="contenu"
+                required
+                rows="6"
+                class="w-full border border-gray-300 rounded-xl px-4 py-3 text-sm focus:outline-none focus:border-gray-500"
+                placeholder="Contenu de l'article..."
+            ></textarea>
+        </div>
+
+        <button
+            type="submit"
+            class="bg-gray-900 text-white px-6 py-3 rounded-xl text-sm font-semibold hover:bg-gray-700 w-fit"
+        >
+            Enregistrer en base de données
+        </button>
+
+    </form>
+
+</div>
+
+{% endblock %}
